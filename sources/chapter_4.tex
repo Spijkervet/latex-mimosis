@@ -25,13 +25,33 @@ In dit hoofdstuk wordt een aantal varianten van een ontwikkelrichting geschetst,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant A}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Ontwikkelen van Nederlands sprekende stem, zonder dialect, ABN. 24 uur spraak data, automatische speech-to-text met \texttt{aeneas} met handmatige aanpassingen binnen het \texttt{finetuneas} systeem.
 
+Het orthografische transcriptie bestand met audio samples gebruiken om Tacotron 2 te trainen. De parameters van het netwerk finetunen zodat er een redelijk, eerste resultaat wordt behaald.
+
+Andere stemmen met eventueel dialect kunnen worden gegenereerd door middel van de technieken uitgelijnd in \textit{Sample Efficient Adaptive Text-to-Speech}. Omdat er relatief weinig spraakdata nodig is om een stemvariant te maken, is dit een reële optie om te onderzoeken of op een eenvoudige wijze een stem met een ander karakter kan worden ontwikkeld.
+
+Daarna kan worden gekeken naar Prosody Embeddings om de stem te verbeteren.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant B}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Ontwikkelen van een Nederlands sprekende stem, met dialect. 24 uur spraak data, gedeeltelijk automatische speech-to-text met \texttt{aeneas} met handmatige aanpassingen binnen het \texttt{finetuneas} systeem.
+
+Het orthografische transcriptie bestand met audio samples gebruiken om Tacotron 2 te trainen. De parameters van het netwerk finetunen zodat er een redelijk, eerste resultaat wordt behaald.
+
+Meest realistische resultaat, maar zeer mogelijk beperkt in adaptief gebruik in het creëren van andere stemvarianten.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant C}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Gebruik maken van een bestaande, Nederlandse spraak dataset zoals de audioboeken in LibriVox. Hoewel de data in het publieke domein ligt, moet worden onderzocht of de data volledig vrij te gebruiken is. Minimaal 24 uur aan spraakdata, gedeeltelijk automatische speech-to-text met \texttt{aeneas} met handmatige aanpassingen binnen het \texttt{finetuneas} systeem.
 
+Het orthografische transcriptie bestand met audio samples gebruiken om Tacotron 2 te trainen. De parameters van het netwerk finetunen zodat er een redelijk, eerste resultaat wordt behaald.
+
+Kwaliteit van het resultaat van de audio is afhankelijk van de kwaliteit van de spraakdataset.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Variant D}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Gebruik maken van bestaande, Engelse spraak dataset zoals \textit{LJSpeech} of Mozilla Common Voice.

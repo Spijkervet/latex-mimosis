@@ -63,13 +63,14 @@ LibriVox is een website dat audioboeken, in het publieke domein aanbiedt. De boe
 
 LibriVox biedt alleen de audio opnames van de boeken aan. Een orthografische transcriptie opgelijnd aan de tekst wordt dus niet aangeboden, deze zal moeten worden samengesteld door middel van speech-to-text software en handmatig werk.
 
+Een nadeel dat wordt genoemd in het gebruik van audioboeken als dataset, is dat de stemacteur vaak op geacteerde wijze de teksten voorleest. Dit heeft zeer mogelijk een impact op de gesynthetiseerde stem, waardoor voor commerciële implementaties gekozen wordt een volledig eigen dataset te maken met neutraal gesproken en gecureerde zinnen.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Oplijnen orthografische transcriptie}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Voor deep learning text-to-speech technieken moet de dataset in een vorm worden gezet, zodat het netwerk de latente translatie kan maken tussen tekst en spraak. Doorgaans wordt spraakdata in fragmenten geknipt, waarbij elk audio fragment een apart bestand is en een zin bevat. Naast alle bestanden met audio fragmenten, wordt er ook een lijst bijgehouden van de orthografische transcriptie van de spraak per bestand. Deze lijst bestaat uit de kolommen zoals weergegeven in Tabel \ref{tab:orthografische_file}.
 
-Voor het automatisch oplijnen en genereren van transcripties uit een spraakdata bestand, bevat het bestand ook tijdcodes van de start en eindpositie van de transcriptie in de spraakdata. Deze methode heet \textit{forced alignment}, waarbij audio en tekst met elkaar worden gesynchroniseerd. Een veelgebruikte, open-source software voor deze taak is \texttt{aenas} \footnote{\url{https://github.com/readbeyond/aeneas}}. Hierbij wordt een bestand gegenereerd zoals aangegeven in Figuur \ref{fig:aenas}. 
+Voor het automatisch oplijnen en genereren van transcripties uit een spraakdata bestand, bevat het bestand ook tijdcodes van de start en eindpositie van de transcriptie in de spraakdata. Deze methode heet \textit{forced alignment}, waarbij audio en tekst met elkaar worden gesynchroniseerd. Een veelgebruikte, open-source software voor deze taak is \texttt{aeneas} \footnote{\url{https://github.com/readbeyond/aeneas}}. Hierbij wordt een bestand gegenereerd zoals aangegeven in Figuur \ref{fig:aenas}. 
 
 \begin{table}[]
     \centering
@@ -121,7 +122,65 @@ Elk audio fragment is een mono, 16-bit PCM WAV bestand met een sample rate van 2
 % LJ001-0006|And it is worth mention in passing that, as an example of fine typography,|And it is worth mention in passing that, as an example of fine typography,
 
 
+\subsection{M-AILABS Speech Dataset}
+NOT DUTCH!
+he M-AILABS Speech Dataset is the first large dataset that we are providing free-of-charge, freely usable as training data for speech recognitionand speech synthesis.
 
+Most of the data is based on LibriVox and Project Gutenberg. The training data consist of nearly thousand hours of audio and the text-files in prepared format.
+
+A transcription is provided for each clip. Clips vary in length from 1 to 20 seconds and have a total length of approximately shown in the list (and in the respective info.txt-files) below.
+
+Intro
+
+People have asked us “Why”, i.e. “why are you giving away this much highly valuable data”.
+
+The quick answer is: because our mission is to enable (European) companies to take advantage of AI & ML without having to give up control or know-how.
+
+The full answer would be significantly longer, but let’s say we just want to advance the use of AI & ML in Europe.
+Directory Structure
+
+Each language is represented by its international ISO-Code for language + country (e.g. de_DEfor de=German, DE=Germany) plus an addition by_bookdirectory.
+
+Below that, you will find directories named:
+
+    female
+    male
+    mixed
+
+The training data is split into female, maleand mixedvoices. In case of mixed, the training data contains maleand femaledata mixed.
+
+For each voice, there is the name and some info.txtcontaining information about the training data. Each training-data directory contains two files:
+
+    metadata.csv
+    metadata_mls.json
+
+The full directory structure looks like this:
+
+All audio-files are in wav-format, mono and 16000 Hz.
+
+The complete training data is in the MLS (M-AILABS)- and LJSpeech-Format. Each bookcontains its own metadata.csv and metadata_mls.json.
+
+Those of you who know the LJSpeech data format will immediately recognize the .csv-file. The _mls.json file contains the same information as the .csv-file except that that information is in JSON-format.
+
+Each line in a metadata.csvconsist of a filename (without extension) and two texts, separated by a “|“-symbol. The text includes upper- and lower-case characters, special-characters (such as punctuation) and more. If you need clean-text, please clean it before using it. For Speech Synthesis, sometimes you need all special characters.
+
+The first text contains the fully original data, including non-normalized numbers, etc. The second version of the text contains the normalized version, meaning numbers have been converted to words and some cleanup of “foreign” characters (transliterations) have been applied.
+
+
+Language 	Country 	Tag 	Length 	Size 	DL Size 	Sample 	DL Link
+German 	Germany 	de_DE 	237h 22m 	27 GiB 	20 GiB 	F / M 	DOWNLOAD
+English 	Queen’s 	en_UK 	45h 34m 	4.9 GiB 	3.5 GiB 	F / M 	DOWNLOAD
+English 	US 	en_US 	102h 07m 	11 GiB 	7.5 GiB 	F / M 	DOWNLOAD
+Spanish 	Spain 	es_ES 	108h 34m 	12 GiB 	8.3 GiB 	F / M 	DOWNLOAD
+Italian 	Italy 	it_IT 	127h 40m 	14 GiB 	9.5 GiB 	F / M 	DOWNLOAD
+Ukrainian 	Ukraine 	uk_UK 	87h 08m 	9.3 GiB 	6.7 GiB 	F / M 	DOWNLOAD
+Russian 	Russia 	ru_RU 	46h 47m 	5.1 GiB 	3.6 GiB 	F / M 	DOWNLOAD
+French* v0.9** 	France 	fr_FR 	190h 30m 	21 GiB 	15 GiB 	F / M 	DOWNLOAD
+Polish* 	Poland 	pl_PL 	53h 50m 	5.8 GiB 	4.2 GiB 	F / M 	DOWNLOAD
+TOTALS (downloadable) 			999h 32m 	~110 GiB 	~78 GiB 	
+
+
+\footnote{\url{https://www.caito.de/2019/01/the-m-ailabs-speech-dataset/}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kwalitatieve en kwantitatieve analyse van spraakdata}
@@ -129,15 +188,22 @@ Elk audio fragment is een mono, 16-bit PCM WAV bestand met een sample rate van 2
 
 Voor het Nederlands zijn er geen transcriptiebestanden aanwezig bij spraakdata van 1 spreker met meer dan of gelijk aan 24 uur aan spraakdata. Dit bemoeilijkt het samenstellen van een adequate dataset voor een text-to-speech systeem gebruikmakend van deep learning modellen. Naast dat de kwantiteit van spraakdata aangeboden door LibriVox voldoende is, is de kwaliteit ook geschikt voor het creëren van een realistisch, Nederlands sprekende gesynthetiseerde stem. De opnames zullen wel moeten worden opgelijnd door middel van automatische spraakherkkeningssoftware en handmatig werk.
 
-Voor het creëren van een realistische, Nederlands sprekende stem wordt uitgegaan van minimaal 24 uur aan spraakdata van 1 spreker. Ook kan er voor worden gekozen een, wel homogene, \textit{multi-speaker} dataset te maken, alhoewel er significant meer data nodig is om een neural netwerk te laten generaliseren op de data. Het creëren van een zodanig netwerk is nodig, ook wanneer technieken als Style Transfer Learning, Prosody Embeddings of die geintroduceerd in \textit{Sample Efficient Adaptive Text-to-Speech} gebruikt gaan worden. Er bestaan hedendaags geen vrij beschikbare, state-of-the-art getrainde modellen voor het Nederlands die kunnen worden gebruikt om Transfer Learning of eerdergenoemde technieken te gebruiken. Deze getrainde modellen worden nu vaak in het Engels of Chinees aangeboden, en zijn ook niet optimaal getraind zodat de commerciële positie van de opdrachtgever van het onderzoek niet in gevaar komt (Deepmind, Google, Baidu).
+Voor het creëren van een realistische, Nederlands sprekende stem wordt uitgegaan van minimaal 24 uur aan spraakdata van 1 spreker. Ook kan er voor worden gekozen een, wel homogene, \textit{multi-speaker} dataset te maken, alhoewel er significant meer data nodig is om een neural netwerk te laten generaliseren op de data. Het creëren van een zodanig netwerk is nodig, ook wanneer technieken als Style Transfer Learning, Prosody Embeddings of die geintroduceerd in \textit{Sample Efficient Adaptive Text-to-Speech} gebruikt gaan worden. Er bestaan hedendaags geen vrij beschikbare, state-of-the-art getrainde (`pre-trained') modellen voor het Nederlands die kunnen worden gebruikt om Transfer Learning of eerdergenoemde technieken te gebruiken. Deze getrainde modellen worden nu vaak in het Engels of Chinees aangeboden, en zijn ook niet optimaal getraind zodat de commerciële positie van de opdrachtgever van het onderzoek niet in gevaar komt (Deepmind, Google, Baidu).
 
 Wanneer er een \textit{baseline} stem is getraind en geïmplementeerd, kan met een aantal minuten spraakdata van een andere spreker al snel een nieuwe stem worden ontwikkeld. Dit is beschreven in \textit{Sample Efficient Adaptive Text-to-Speech}, maar is nog niet getest in andere talen dan het Engels. Mogelijk kan ook een stem worden ontwikkeld met een ander, eigen karakter en een (licht) dialect nadat deze \textit{baseline} stem is ontwikkeld.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Marktanalyse}
-
+\section{Handmatig werk}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Voor het creëren van een correct, orthografisch transcriptie bestand is handmatig werk noodzakelijk. Automatische speech-to-text systemen hebben, zeker voor het Nederlands, een Word Error Rate (WER) die te hoog kan liggen om een adequate transcriptie te verkrijgen. Daarom is het hebben of ontwikkelen van annotatiesoftware noodzakelijk om dit op een gestroomlijnde wijze te bewerkstelligen. Vaak wordt dit werk uitbesteed aan bijvoorbeeld instanties als Amazon Mechanical Turk, die gespecialiseerd is in het inzetten van menselijk denken in het maken van AI datasets. Een open-source annotatie implementatie specifiek voor \textit{forced alignment}, is \texttt{finetuneas} \footnote{\url{https://github.com/ozdefir/finetuneas}}. Het is ontworpen om de orthografische transcriptie output van \texttt{aeneas} eenvoudig te manipuleren en te corrigeren\ref{fig:finetuneas}. Doorgaans kost het correct annoteren van een uur spraakdata acht á 10 uur werk. Voor een dataset van minimaal 24 uur, komt dit neer op 192 uur. Door gebruik te maken van een automatisch speech-to-text systeem kan dit proces worden versneld. Wel geldt, dat de audio van goede kwaliteit moet zijn en de speech-to-text software de gesproken taal ondersteund. Met name geldt dit voor dialect: huidige speech-to-text software hebben een hoge Word Error Rate wanneer het dialect moet transcriberen. Een Nederlandse stem ontwikkelen met dialect benodigd dus significant meer handmatig werk om een correcte orthografische transcriptie te vervaardigen waar een neuraal netwerk getraind mee kan worden.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/finetuneas.png}
+    \caption{Web interface of \texttt{finetuneas}}
+    \label{fig:finetuneas}
+\end{figure}
+
 
 \section{Actorenanalyse}
 \subsection{Ambities opdrachtgever}
