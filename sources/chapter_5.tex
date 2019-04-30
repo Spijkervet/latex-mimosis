@@ -19,10 +19,55 @@ Het uitschrijven van één uur geluid kost ongeveer 8 á 10 uur werk en is dus e
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Financiële parameters}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+De prijzen die zijn uitgelijnd in deze paragraaf zijn opgevraagd in april 2019.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hardware}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Tacotron 2 gebruikt circa 11GB GPU memory met een \texttt{batch\_size} van van 32. Het originele paper gebruikt een \texttt{batch\_size} van 64, waarmee state-of-the-art resultaten werden behaald. Hoe hoger de \texttt{batch\_size}, des te meer samples een neuraal netwerk `ziet'. Hiermee kunnen netwerken beter getraind worden, dan dat er lagere \texttt{batch\_size} worden gekozen.  Een GPU met minimaal 11 GB aan RAM wordt dus aanbevolen.
+
+Er zijn drie kenmerken waar gelet op moet worden bij de aanschaf van een GPU voor het gebruik in deep learning:
+\begin{enumerate}
+    \item Geheugen (RAM): De mogelijkheid om veel data te processen. Veel hedendaagse deep learning modellen hebben grote datasets en een diepe netwerk structuur, waardoor veel geheugen nodig is bij het trainen van het netwerk. Voor het verwerken van beeld en audio wordt een hoger RAM aangeraden.
+    \item Processing kracht: Dit geeft aan hoe snel de GPU data kan verwerken. Dit wordt vaak berekend aan de kloksnelheid en het aantal CUDA cores van de GPU. 
+\end{enumerate}
+
+Een snelle GPU is belangrijk voor het snel ontwikkelen van de architectuur van het model en het aanpassen van de parameters. Het kan vaak uren tot dagen duren voordat een netwerk convergeert naar een resultaat. Wanneer er dan fouten zijn gemaakt, kost het veel tijd om het netwerk opnieuw op te starten en te trainen. In een test is Tacotron 2 \footnote{\url{https://github.com/NVIDIA/tacotron2}} voor een aantal epochs getraind op een NVIDIA GTX 1080 Ti. (Een epoch is een gehele iteratie door de gehele dataset). Een iteratie over een batch kostte ongeveer 3 seconden, waardoor een epoch ongeveer 15 minuten bedroeg. In totaal worden 500 epochs voorgeschreven, wat neerkomt op ongeveer 5 dagen in totaal om Tacotron 2 te trainen op de LJSpeech dataset op een NVIDA GTX 1080 Ti.
+
+De nieuwe 'Volta' generatie van NVIDIA GPU's hebben een een Tensor Core unit. Deze zijn significant sneller en worden hedendaags veel gebruikt bij het trainen van diepe netwerken. In tabel \ref{tab:gpus} worden de kosten uitgelicht van drie verschillende modellen, waarmee een onderscheid wordt gemaakt in de GTX, Kepler en Volta generaties.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+        Hardware & CUDA cores & RAM & TFLOPS &  Kosten \\
+        NVIDIA GTX 1080 Ti & 3584 & 11 GB & 1.079 & \$700 \\
+        NVIDIA Tesla K80 & 4992 &  24 GB & 1.87+ & \$1,700 \\
+        NVIDA Tesla V100 & 5120 & 16 / 32 GB & 7 tot 7.8 & \$6,099 \\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:gpus}
+\end{table}
+
+\subsection{AWS}
+De onderstaande prijslijst is afkomstig van Amazon Web Services, dat instanties van cloud computers aanbiedt aan particulieren. De P-serie biedt GPU cloud computing instanties aan met NVIDIA Kepler en Volta GPU's.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+        Model & GPU & vCPU & RAM & GPU RAM & Kosten (per maand) \\
+        p2.xlarge & 1 $\times$ NVIDIA Tesla K80 & 4 & 61 & 12 & \$448.22  \\
+        p2.8xlarge & 8 $\times$ NVIDIA Tesla V100 & 32 & 488 & 96 & \$3,587.22  \\
+        p3.2xlarge & 1 $\times$ NVIDIA Tesla V100 & 8 & 61 & 16 & \$1,524.24 \\
+        p3.8xlarge & 4 $\times$ NVIDIA Tesla V100 & 32 & 244 & 64 & \$6,098.42  \\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Resultaten variant A}

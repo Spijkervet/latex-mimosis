@@ -10,16 +10,40 @@
   \vspace{0.5cm}
 \end{center}
 
-\noindent This package contains a minimal, modern template for writing your
-thesis. While originally meant to be used for a Ph.\,D.\ thesis, you can
-equally well use it for your honour thesis, bachelor thesis, and so
-on---some adjustments may be necessary, though.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusies}
+Dit document was opgesteld om de haalbaarheid van de ontwikkeling van een Nederlandse stem met verschillende accenten en dialecten op basis van de hedendaagse machine learning technieken te onderzoeken. De volgende vragen stonden centraal in dit onderzoek:
+\begin{enumerate}
+    \item Welke technieken liggen er voor handen?
+    \item Welke mogelijkheden zijn er op gebied van flexibele aanpassing van de prosodie en uitspraak?
+    \item Hoeveel uur spraakdata is er grofweg nodig en van welke kwaliteit moet die data ongeveer zijn?
+\end{enumerate}
+
+Op basis van de uitkomsten van deze vragen wordt er nu een advies uitgebracht of binnen het Robot Speech Project een prototype kan worden gemaakt, of dat er een andere focus nodig is voor het signaalpad tussen robot en mens.
+
+\subsection{Opgaven}
+De concreet gemaakte opgaven waar Prolody B.V. voor staat luidden:
+\begin{enumerate}[a)]
+    \item het realiseren van een Nederlands sprekende, realistisch gesynthetiseerde stem met menselijk en persoonlijk karakter in de uitvoering van accent en dialect;
+    \item uitvoering geven aan de ontwikkeling van deze stem op basis van hedendaagse technieken in Artificiële Intelligentie (AI);
+    \item het samenstellen van, al dan niet aanwezige, kwantitatief en kwalitatief voldoende data om deze stem te realiseren;
+    \item de aanpassing van prosodie op basis van de toestand waarin de conversatie verkeert, of wanneer een zin bedoeld wordt als vraag of opmerking.
+\end{enumerate}
+
+\subsubsection{Opgave b}
+Voor het beantwoorden van opgave b), zijn de hedendaagse technieken in AI beschreven in hoofdstuk 2. Het gebruik van Tacotron 2 wordt aangeraden als neuraal netwerk architectuur voor het creëren van een Nederlands sprekende, gesynthetiseerde stem door de adequate, open-source, licentie-vrij en gemakkelijk te gebruiken implementatie van het netwerk.
+
+\subsubsection{Opgave c}
+Voor het beantwoorden van opgave c), zijn de beschikbare datasets uitgelijnd en een gangbaar dataformaat voor het trainen van een neuraal netwerk beschreven in hoofdstuk 3. Een dataset kan op twee manieren worden samengesteld, ten eerste door een bestand met \texttt{<audio\_bestandsnaam, tekst>} paren, waar op elke rij een audio bestandsnaam met de orthografische transcriptie van de audio staat. Ten tweede kan er een orthografisch transcriptie bestand worden aangemaakt met tijdcodes van het begin en einde van de zin. Voor het behoud van een goed overzicht van de data, wordt de eerste manier  met \texttt{<audio\_bestandsnaam, tekst>} paren aangeraden.
+
+\subsubsection{Opgave d}
+Voor het beantwoorden van opgave d), is in hoofdstuk 2 het onderzoek naar Prosody Embeddings uitgelijnd. Er zijn weinig open-source implementaties en de resultaten ervan komen niet dicht bij het gepubliceerde onderzoek. De ontwikkeling van het aanpassen van prosodie op basis van een gegeven emotie, punctuatie of via een SSML is daarom minder haalbaar en wordt, totdat er een betere, licentie-vrije open-source implementatie is, afgeraden.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Aanbevelingen}
+Variant A geniet de voorkeur als ontwikkelrichting voor Prolody B.V. voor het realiseren van een Nederlands sprekende, realistisch gesynthetiseerde stem met menselijk en persoonlijk karakter in de uitvoering van accent en dialect. Deze variant biedt de mogelijkheid meerdere stemvarianten te ontwikkelen door \textit{Sample Efficient Adaptive Text-to-Speech} te gebruiken, waar een kleinere hoeveelheid data benodigd is voor het ontwikkelen van een stemvariant. Deze stemvariant kan in de vorm van accent en dialect ontwikkeld worden door een aantal minuten van een nieuw opgenomen spraakdata (in accent of dialect) te gebruiken om het getrainde neurale netwerk van de Standaardnederlandse stem mee aan te passen. Wanneer een adequate implementatie van Prosody Embeddings aanwezig is, kan die tevens worden toegepast op het getrainde netwerk van Standaardnederlands en/of die van een stemvariant. Ook is het creëren van een Nederlandse spraakdataset an sich zeer waardevol vanuit het oogpunt van de ontwikkeling van datasets voor AI technologieën op Nederlandse bodem.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -10,11 +10,6 @@
   \vspace{0.5cm}
 \end{center}
 
-\noindent This package contains a minimal, modern template for writing your
-thesis. While originally meant to be used for a Ph.\,D.\ thesis, you can
-equally well use it for your honour thesis, bachelor thesis, and so
-on---some adjustments may be necessary, though.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Inleiding}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,7 +72,7 @@ Voor het automatisch oplijnen en genereren van transcripties uit een spraakdata 
     \scalebox{0.7}{
         \begin{tabular}{c|c|c}
             bestands naam & orthografische transcriptie & genormaliseerde, orthografische transcriptie \\
-            librivox\_1 & Dhr. Koenders bestelde 46 tomaten bij de groenteboer. & De heer Koenders bestelde zes en veertig tomaten bij de groenteboer.
+            librivox\_1.wav & Dhr. Koenders bestelde 46 tomaten bij de groenteboer. & De heer Koenders bestelde zes en veertig tomaten bij de groenteboer.
         \end{tabular}
     }
     \caption{Kolommen van een orthografisch transcriptie bestand}
@@ -86,7 +81,7 @@ Voor het automatisch oplijnen en genereren van transcripties uit een spraakdata 
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/transcription.png}
+    \includegraphics[width=0.75\textwidth]{figures/transcription.png}
     \caption{Voorbeeld bestand van een automatische, orthografische transcriptie met tijdcodes}
     \label{fig:aenas}
 \end{figure}
@@ -123,64 +118,8 @@ Elk audio fragment is een mono, 16-bit PCM WAV bestand met een sample rate van 2
 
 
 \subsection{M-AILABS Speech Dataset}
-NOT DUTCH!
-he M-AILABS Speech Dataset is the first large dataset that we are providing free-of-charge, freely usable as training data for speech recognitionand speech synthesis.
-
-Most of the data is based on LibriVox and Project Gutenberg. The training data consist of nearly thousand hours of audio and the text-files in prepared format.
-
-A transcription is provided for each clip. Clips vary in length from 1 to 20 seconds and have a total length of approximately shown in the list (and in the respective info.txt-files) below.
-
-Intro
-
-People have asked us “Why”, i.e. “why are you giving away this much highly valuable data”.
-
-The quick answer is: because our mission is to enable (European) companies to take advantage of AI & ML without having to give up control or know-how.
-
-The full answer would be significantly longer, but let’s say we just want to advance the use of AI & ML in Europe.
-Directory Structure
-
-Each language is represented by its international ISO-Code for language + country (e.g. de_DEfor de=German, DE=Germany) plus an addition by_bookdirectory.
-
-Below that, you will find directories named:
-
-    female
-    male
-    mixed
-
-The training data is split into female, maleand mixedvoices. In case of mixed, the training data contains maleand femaledata mixed.
-
-For each voice, there is the name and some info.txtcontaining information about the training data. Each training-data directory contains two files:
-
-    metadata.csv
-    metadata_mls.json
-
-The full directory structure looks like this:
-
-All audio-files are in wav-format, mono and 16000 Hz.
-
-The complete training data is in the MLS (M-AILABS)- and LJSpeech-Format. Each bookcontains its own metadata.csv and metadata_mls.json.
-
-Those of you who know the LJSpeech data format will immediately recognize the .csv-file. The _mls.json file contains the same information as the .csv-file except that that information is in JSON-format.
-
-Each line in a metadata.csvconsist of a filename (without extension) and two texts, separated by a “|“-symbol. The text includes upper- and lower-case characters, special-characters (such as punctuation) and more. If you need clean-text, please clean it before using it. For Speech Synthesis, sometimes you need all special characters.
-
-The first text contains the fully original data, including non-normalized numbers, etc. The second version of the text contains the normalized version, meaning numbers have been converted to words and some cleanup of “foreign” characters (transliterations) have been applied.
-
-
-Language 	Country 	Tag 	Length 	Size 	DL Size 	Sample 	DL Link
-German 	Germany 	de_DE 	237h 22m 	27 GiB 	20 GiB 	F / M 	DOWNLOAD
-English 	Queen’s 	en_UK 	45h 34m 	4.9 GiB 	3.5 GiB 	F / M 	DOWNLOAD
-English 	US 	en_US 	102h 07m 	11 GiB 	7.5 GiB 	F / M 	DOWNLOAD
-Spanish 	Spain 	es_ES 	108h 34m 	12 GiB 	8.3 GiB 	F / M 	DOWNLOAD
-Italian 	Italy 	it_IT 	127h 40m 	14 GiB 	9.5 GiB 	F / M 	DOWNLOAD
-Ukrainian 	Ukraine 	uk_UK 	87h 08m 	9.3 GiB 	6.7 GiB 	F / M 	DOWNLOAD
-Russian 	Russia 	ru_RU 	46h 47m 	5.1 GiB 	3.6 GiB 	F / M 	DOWNLOAD
-French* v0.9** 	France 	fr_FR 	190h 30m 	21 GiB 	15 GiB 	F / M 	DOWNLOAD
-Polish* 	Poland 	pl_PL 	53h 50m 	5.8 GiB 	4.2 GiB 	F / M 	DOWNLOAD
-TOTALS (downloadable) 			999h 32m 	~110 GiB 	~78 GiB 	
-
-
-\footnote{\url{https://www.caito.de/2019/01/the-m-ailabs-speech-dataset/}}
+M-AILABS heeft recentelijk een van de grootste, homogene spraakdatasets in het publieke domein uitgegeven
+\footnote{\url{https://www.caito.de/2019/01/the-m-ailabs-speech-dataset/}}. De dataset bevat data van LibriVox en Project Gutenberg, met ongeveer duizend uur aan audio en tekst in totaal. Ook zijn de orthografische transcripties opgelijnd met de audio, wat deze dataset uniek in zijn soort maakt voor veel verschillende talen en stemkarakters. Het audioformaat is mono en 16.000 Hz. Het formaat is consistent met de LJSpeech dataset beschreven in de vorige sectie. De M-AILABS heeft veel verschillende talen, maar bevat geen Nederlandse spraakdata. Deze dataset is daarom niet geschikt voor het ontwikkelen van een Nederlandse stem, maar kan gebruikt worden om mee te experimenteren en een idee te krijgen van de benodigde grootte van de data voor een adequaat resultaat in een getraind neuraal netwerk.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kwalitatieve en kwantitatieve analyse van spraakdata}
@@ -197,10 +136,10 @@ Wanneer er een \textit{baseline} stem is getraind en geïmplementeerd, kan met e
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Voor het creëren van een correct, orthografisch transcriptie bestand is handmatig werk noodzakelijk. Automatische speech-to-text systemen hebben, zeker voor het Nederlands, een Word Error Rate (WER) die te hoog kan liggen om een adequate transcriptie te verkrijgen. Daarom is het hebben of ontwikkelen van annotatiesoftware noodzakelijk om dit op een gestroomlijnde wijze te bewerkstelligen. Vaak wordt dit werk uitbesteed aan bijvoorbeeld instanties als Amazon Mechanical Turk, die gespecialiseerd is in het inzetten van menselijk denken in het maken van AI datasets. Een open-source annotatie implementatie specifiek voor \textit{forced alignment}, is \texttt{finetuneas} \footnote{\url{https://github.com/ozdefir/finetuneas}}. Het is ontworpen om de orthografische transcriptie output van \texttt{aeneas} eenvoudig te manipuleren en te corrigeren\ref{fig:finetuneas}. Doorgaans kost het correct annoteren van een uur spraakdata acht á 10 uur werk. Voor een dataset van minimaal 24 uur, komt dit neer op 192 uur. Door gebruik te maken van een automatisch speech-to-text systeem kan dit proces worden versneld. Wel geldt, dat de audio van goede kwaliteit moet zijn en de speech-to-text software de gesproken taal ondersteund. Met name geldt dit voor dialect: huidige speech-to-text software hebben een hoge Word Error Rate wanneer het dialect moet transcriberen. Een Nederlandse stem ontwikkelen met dialect benodigd dus significant meer handmatig werk om een correcte orthografische transcriptie te vervaardigen waar een neuraal netwerk getraind mee kan worden.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/finetuneas.png}
-    \caption{Web interface of \texttt{finetuneas}}
+    \caption{Web interface van \texttt{finetuneas}}
     \label{fig:finetuneas}
 \end{figure}
 

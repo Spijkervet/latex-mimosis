@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Toelichting en schetsplan}
+\chapter{Ontwikkelrichting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{center}
@@ -12,11 +12,6 @@
   \vspace{0.5cm}
 \end{center}
 
-\noindent This package contains a minimal, modern template for writing your
-thesis. While originally meant to be used for a Ph.\,D.\ thesis, you can
-equally well use it for your honour thesis, bachelor thesis, and so
-on---some adjustments may be necessary, though.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Inleiding}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,33 +20,27 @@ In dit hoofdstuk wordt een aantal varianten van een ontwikkelrichting geschetst,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant A}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Ontwikkelen van Nederlands sprekende stem, zonder dialect, ABN. 24 uur spraak data, automatische speech-to-text met \texttt{aeneas} met handmatige aanpassingen binnen het \texttt{finetuneas} systeem.
+De eerste variant wordt als volgt gedefinieerd: het ontwikkelen van een Standaardnederlands sprekende stem, zonder dialec, door het professioneel opnemen van een stemacteur. Dit wordt gedaan met ongeveer 24 uur spraak data, waarbij automatische speech-to-text herkenning wordt uitgevoerd met \texttt{aeneas}, waarna handmatige aanpassingen binnen het \texttt{finetuneas} systeem worden gedaan.
 
-Het orthografische transcriptie bestand met audio samples gebruiken om Tacotron 2 te trainen. De parameters van het netwerk finetunen zodat er een redelijk, eerste resultaat wordt behaald.
-
-Andere stemmen met eventueel dialect kunnen worden gegenereerd door middel van de technieken uitgelijnd in \textit{Sample Efficient Adaptive Text-to-Speech}. Omdat er relatief weinig spraakdata nodig is om een stemvariant te maken, is dit een reële optie om te onderzoeken of op een eenvoudige wijze een stem met een ander karakter kan worden ontwikkeld.
-
-Daarna kan worden gekeken naar Prosody Embeddings om de stem te verbeteren.
+Het dan gegenereerde orthografische transcriptie bestand wordt met de audio samples gebruikt om Tacotron 2 te trainen. De parameters van het netwerk worden daarna handmatig versteld, totdat er een acceptabel, eerste resultaat wordt behaald. Als vervolgstap kunnen andere stemmen, met eventueel dialect, worden gegenereerd door middel van de technieken uitgelijnd in \textit{Sample Efficient Adaptive Text-to-Speech}. Omdat er relatief weinig spraakdata nodig is om een stemvariant te maken, is dit een reële optie om te onderzoeken of op een eenvoudige wijze een stem met een ander karakter kan worden ontwikkeld. Ook kan na het trainen van een Standaardnederlandse stem worden gekeken naar Prosody Embeddings om de stem te verbeteren voor het signaalpad tussen robot en mens.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant B}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Ontwikkelen van een Nederlands sprekende stem, met dialect. 24 uur spraak data, gedeeltelijk automatische speech-to-text met \texttt{aeneas} met handmatige aanpassingen binnen het \texttt{finetuneas} systeem.
+De tweede variant wordt als volgt gedefinieerd: het ontwikkelen van een Nederlands sprekende stem, met dialect, door het professioneel opnemen van een stemacteur. Dit wordt wederom gedaan met ongeveer 24 uur spraak data, waarbij automatische speech-to-text herkenning wordt uitgevoerd met \texttt{aeneas}, waarna handmatige aanpassingen binnen het \texttt{finetuneas} systeem worden gedaan. Echter, de Word Error Rate van text-to-speech systemen is erg hoog vergeleken met het Standaardnederlands. Deze variant zal dus significant meer handmatig werk benodigen. Het dan gegenereerde orthografische transcriptie bestand wordt met audio samples gebruikt om Tacotron 2 te trainen. De parameters van het netwerk worden daarna handmatig versteld, totdat er een acceptabel, eerste resultaat wordt behaald.
 
-Het orthografische transcriptie bestand met audio samples gebruiken om Tacotron 2 te trainen. De parameters van het netwerk finetunen zodat er een redelijk, eerste resultaat wordt behaald.
-
-Meest realistische resultaat, maar zeer mogelijk beperkt in adaptief gebruik in het creëren van andere stemvarianten.
+Deze variant geeft hoogstwaarschijnlijk het meest realistische resultaat, maar is zeer mogelijk beperkt in adaptief gebruik in het creëren van andere stemvarianten. Ook is deze variant het meest arbeidsintensief.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant C}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Gebruik maken van een bestaande, Nederlandse spraak dataset zoals de audioboeken in LibriVox. Hoewel de data in het publieke domein ligt, moet worden onderzocht of de data volledig vrij te gebruiken is. Minimaal 24 uur aan spraakdata, gedeeltelijk automatische speech-to-text met \texttt{aeneas} met handmatige aanpassingen binnen het \texttt{finetuneas} systeem.
+De derde variant wordt als volgt gedefinieerd: het ontwikkelen van een Nederlands sprekende stem, gebruik makende van een bestaande, Nederlandse spraak dataset zoals de audioboeken in LibriVox. Hoewel de data in het publieke domein ligt, moet worden onderzocht of de data volledig vrij te gebruiken is. Weer is minimaal 24 uur aan spraakdata benodigd, dat gedeeltelijk automatisch door speech-to-text herkenning met \texttt{aeneas} wordt omgezet in een orthografische transcriptie. De transcriptie kan daarna handmatige worden verbeterd binnen het \texttt{finetuneas}. Het gegenereerde en verbeterde orthografische transcriptie bestand wordt met de audio samples gebruikt om Tacotron 2 te trainen. De parameters van het netwerk worden daarna aangepast totdat er een acceptabel, eerste resultaat wordt behaald.
 
-Het orthografische transcriptie bestand met audio samples gebruiken om Tacotron 2 te trainen. De parameters van het netwerk finetunen zodat er een redelijk, eerste resultaat wordt behaald.
-
-Kwaliteit van het resultaat van de audio is afhankelijk van de kwaliteit van de spraakdataset.
+De kwaliteit van de audio van het resultaat is afhankelijk van de kwaliteit van de spraakdataset. Er zal dus moeten worden gelet op de uitvoering van de gekozen LibriVox dataset. Ook moet de dataset homogeen zijn, waarbij de voorkeur uit gaat naar maximaal 1 stemacteur.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Variant D}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Gebruik maken van bestaande, Engelse spraak dataset zoals \textit{LJSpeech} of Mozilla Common Voice.
+De vierde variant betreft vooral een experimenteel alternatief op de vorige vier, waarbij gebruik wordt gemaakt van een bestaande, Engelse spraak dataset zoals \textit{LJSpeech}. Met deze dataset kan dan worden geëxperimenteerd met de best werkende deep learning modellen voor spraakdata en het, nadat het netwerk is getraind, creëren van stemvarianten door middel van de technieken uitgelijnd in \textit{Sample Efficient Adaptive Text-to-Speech}. Met deze variant kan Prolody B.V. eerst onderzoeken welke stappen binnen een ontwikkelrichting moeten worden genomen om tot een gewenst resultaat te komen, zonder dat er veel kosten en arbeidsuren worden gemaakt.
+
+Een nadeel van deze variant, is dat er geen Nederlands sprekende stem wordt ontwikkeld, noch een deep learning model voor Nederlanse text-to-speech wordt getraind die kan worden ingezet om andere stemvarianten te maken zoals de gewenste variatie in dialect en accent.

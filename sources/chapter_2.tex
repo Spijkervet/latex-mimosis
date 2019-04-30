@@ -11,8 +11,6 @@
   \vspace{0.5cm}
 \end{center}
 
-\noindent ...
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Inleiding}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,13 +69,6 @@ In \textit{Unit selection synthesis} systemen wordt in een database gezocht naar
 Om de ontwikkeling van een spraak \textit{unit} database te versnellen, zijn er automatische synthese \textit{unit} generation systemen ontwikkeld \cite{nakajima1994automatic}. Hierbij wordt de inventaris van spraak \textit{units} automatisch geannoteerd door middel van een al geannoteerde database (spraak waarvan de tekst al is getranscribeerd).
 
 
-\subsubsection{Diphone synthesis}
-ne popular unit is the diphone, which consists of the transition from the center of one phoneme to the center of the following one. This model helps to capture transitional information between phonemes. A complete set of diphones would number approximately 1600, since there
-
-are approximately (40) possible combinations of phoneme pairs. Diphone speech synthesis thus requires only a mod erate amount of storage. One disadvantage of diphones is that they lead to a large number of concatenation points (one per phoneme), so that heavy reliance is placed upon an efficient Smoothing algorithm, preferably in combination with a diphone boundary optimization. Traditional diphone synthesizers, such as the TTS3000 of Lernout & Hauspie Speech and Language Products N.V., use only one candidate speech unit per diphone. Due to the limited prosodic vari ability, pitch and duration manipulation techniques are needed to synthesize speech messages. In addition, diphones synthesis does not always result in good output speech quality.
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hedendaagse technieken}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,15 +79,17 @@ WaveNet is een neuraal netwerk voor het genereren van audio waveforms \cite{4577
 WaveNet is ontwikkeld door DeepMind en ligt ten grondslag aan alle nieuwe text-to-speech systemen van Google die onder andere worden gebruikt in de Google Assistant \footnote{\url{https://cloud.google.com/text-to-speech/docs/wavenet}}.
 
 
-
-
 \subsection{Tacotron}
+WaveNet netwerken worden gemaakt met audio waveforms. Tacotron\cite{Wang2017TacotronTE} netwerken worden gemaakt met spectogrammen, een visuele representatie van het spectrum van frequenties van een signaal variërend over tijd. Het is een end-to-end generatief text-to-speech model dat direct spraak synthetiseert van karakters (letters). Gegeven \texttt{tekst, audio} paren wordt dit model volledig getraind, zonder gebruik te maken van een pre-trained netwerk. Het bereikt een \textit{naturalness score} van 3.82 van de 5 voor het Engels. Tacotron genereert spraak op een frame-niveau, wat significant sneller is dan modellen als WaveNet die genereren op sample-niveau. 
 
-\cite{Wang2017TacotronTE}
-A text-to-speech synthesis system typically consists of multiple stages, such as a text analysis frontend, an acoustic model and an audio synthesis module. Building these components often requires extensive domain expertise and may contain brittle design choices. In this paper, we present Tacotron, an end-to-end generative text-to-speech model that synthesizes speech directly from characters. Given <text, audio> pairs, the model can be trained completely from scratch with random initialization. We present several key techniques to make the sequence-to-sequence framework perform well for this challenging task. Tacotron achieves a 3.82 subjective 5-scale mean opinion score on US English, outperforming a production parametric system in terms of naturalness. In addition, since Tacotron generates speech at the frame level, it's substantially faster than sample-level autoregressive methods. 
+Omdat spectogrammen informatie verliezen over de positie van de fase in een frame, wordt het Griffin-Lim algoritme gebruikt om de audio waveforms te reconstruereren door de fase van de input spectogram te voorspellen. Het resultaat hiervan was enige fasevervorming in de resultaten. Tacotron is met 8 papers verbeterd tot Tacotron 2. In figuur \ref{fig:tacotron} wordt het eerste model van Tacotron weergegeven.
 
-
-or machine translation (Wu et al., 2016),  TTS outputs are continuous,  and output sequences areusually much longer than those of the input. These attributes cause prediction errors to accumulatequickly.   In this paper,  we propose Tacotron,  an end-to-end generative TTS model based on thesequence-to-sequence (seq2seq) (Sutskever et al., 2014) with attention paradigm (Bahdanau et al.,2014).  Our model takes characters as input and outputs raw spectrogram, using several techniquesto improve the capability of a vanilla seq2seq model.   Given<text,  audio>pairs,  Tacotron canbe trained completely from scratch with random initialization.  It does not require phoneme-levelalignment, so it can easily scale to using large amounts of acoustic data with transcripts.  With asimple waveform synthesis technique, Tacotron produces a 3.82 mean opinion score (MOS) on anUS English eval set, outperforming a production parametric system in terms of naturalness1.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/tacotron.png}
+    \caption{Model architectuur van Tacotron. Het model neemt karakters (letters) als input en geeft als output de corresponderende spectogram, wat daarna aan het Griffin-Lim reconstructie algoritme wordt gevoed om spraak te synthetiseren.}
+    \label{fig:tacotron}
+\end{figure}
 
 
 \subsection{Deep Voice}
@@ -126,6 +119,7 @@ This paper describes Tacotron 2, a neural network architecture for speech synthe
 \footnote{\url{https://rayhane-mamah.github.io/Tacotron-2_audio_samples/}}
 
 \subsubsection{Prosody embedding}
+\footnote{\url{https://syang1993.github.io/gst-tacotron/}}
  In this work, we propose "global style tokens" (GSTs), a bank of embeddings that are jointly trained within Tacotron, a state-of-the-art end-to-end speech synthesis system. The embeddings are trained with no explicit labels, yet learn to model a large range of acoustic expressiveness. GSTs lead to a rich set of significant results. The soft interpretable "labels" they generate can be used to control synthesis in novel ways, such as varying speed and speaking style - independently of the text content. They can also be used for style transfer, replicating the speaking style of a single audio clip across an entire long-form text corpus. When trained on noisy, unlabeled found data, GSTs learn to factorize noise and speaker identity, providing a path towards highly scalable but robust speech synthesis. 
 
 SAMPLES:
