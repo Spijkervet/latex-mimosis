@@ -2,14 +2,14 @@
 \chapter{Context}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{center}
-  \begin{minipage}{0.5\textwidth}
-    \begin{small}
-      Hoofdstuk 2 besteedt aandacht aan de historie van de gesynthetiseerde stem en de hedendaags aanwezige technieken en initiatieven tot het realiseren van een menselijke stem met een eigen karakter. Het hoofdstuk wordt afgesloten met een afweging ten aanzien van de tegenwoordige initiatieven en de ontwikkelrichting van Prolody B.V.
-    \end{small}
-  \end{minipage}
-  \vspace{0.5cm}
-\end{center}
+% \begin{center}
+%   \begin{minipage}{0.5\textwidth}
+%     \begin{small}
+%       Hoofdstuk 2 besteedt aandacht aan de historie van de gesynthetiseerde stem en de hedendaags aanwezige technieken en initiatieven tot het realiseren van een menselijke stem met een eigen karakter. Het hoofdstuk wordt afgesloten met een afweging ten aanzien van de tegenwoordige initiatieven en de ontwikkelrichting van Prolody B.V.
+%     \end{small}
+%   \end{minipage}
+%   \vspace{0.5cm}
+% \end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Inleiding}
@@ -80,11 +80,11 @@ WaveNet is ontwikkeld door DeepMind en ligt ten grondslag aan alle nieuwe text-t
 
 
 \subsection{Tacotron}
-WaveNet netwerken worden gemaakt met audio waveforms. Tacotron\cite{Wang2017TacotronTE} netwerken worden gemaakt met spectogrammen, een visuele representatie van het spectrum van frequenties van een signaal variërend over tijd. Het is een end-to-end generatief text-to-speech model dat direct spraak synthetiseert van karakters (letters). Gegeven \texttt{tekst, audio} paren wordt dit model volledig getraind, zonder gebruik te maken van een pre-trained netwerk. Het bereikt een \textit{naturalness score} van 3.82 van de 5 voor het Engels. Tacotron genereert spraak op een frame-niveau, wat significant sneller is dan modellen als WaveNet die genereren op sample-niveau. 
+WaveNet netwerken worden gemaakt met audio waveforms. Tacotron\cite{Wang2017TacotronTE} netwerken worden gemaakt met spectogrammen, een visuele representatie van het spectrum van frequenties van een signaal variërend over tijd. Het is een end-to-end generatief text-to-speech model dat direct spraak synthetiseert van karakters (letters). Gegeven \texttt{<tekst, audio>} paren wordt dit model volledig getraind, zonder gebruik te maken van een pre-trained netwerk. Het bereikt een \textit{naturalness score} van 3.82 van de 5 voor het Engels. Tacotron genereert spraak op een frame-niveau, wat significant sneller is dan modellen als WaveNet die genereren op sample-niveau. 
 
 Omdat spectogrammen informatie verliezen over de positie van de fase in een frame, wordt het Griffin-Lim algoritme gebruikt om de audio waveforms te reconstruereren door de fase van de input spectogram te voorspellen. Het resultaat hiervan was enige fasevervorming in de resultaten. Tacotron is met 8 papers verbeterd tot Tacotron 2. In figuur \ref{fig:tacotron} wordt het eerste model van Tacotron weergegeven.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/tacotron.png}
     \caption{Model architectuur van Tacotron. Het model neemt karakters (letters) als input en geeft als output de corresponderende spectogram, wat daarna aan het Griffin-Lim reconstructie algoritme wordt gevoed om spraak te synthetiseren.}
@@ -93,60 +93,60 @@ Omdat spectogrammen informatie verliezen over de positie van de fase in een fram
 
 
 \subsection{Deep Voice}
-\footnote{\url{https://r9y9.github.io/deepvoice3_pytorch/}}
-We present Deep Voice 3, a fully-convolutional attention-based neural text-to-speech (TTS) system. Deep Voice 3 matches state-of-the-art neural speech synthesis systems in naturalness while training ten times faster. We scale Deep Voice 3 to data set sizes unprecedented for TTS, training on more than eight hundred hours of audio from over two thousand speakers. In addition, we identify common error modes of attention-based speech synthesis networks, demonstrate how to mitigate them, and compare several different waveform synthesis methods. We also describe how to scale inference to ten million queries per day on one single-GPU server. 
+Deep Voice (3) is een volledig neuraal convolutie netwerk gebaseerd op attention\cite{Arik2017DeepVR}. Het neemt data van een \textit{multi-speaker} dataset, waarbij het netwerk traint op meerdere stemvarianten. De model architectuur van Deep Voice heeft drie componenten. Het heeft een volledige convolutie encoder, waarmee tekstuele kenmerken worden omgezet naar een interne, gevectoriseerde representatie. De decoder heeft tevens een volledige convolutie, waarmee de representaties die geleerd zijn door het netwerk via een attention mechanisme naar een audio representatie worden omgezet (mel-scale spectogrammen). De converter voorspelt de parameters voor de vocoder die wordt gebruikt voor het omzetten van de mel-scale spectrogrammen naar een audio signaal. Er is een Griffin-Lim vocoder, WORLD vocoder en een WaveNet vocoder. De model architectuur van Deep Voice 3 wordt weergegeven in figuur \ref{fig:deepvoice}. Ook is er een open-source implementatie van Deep Voice 3 \footnote{\url{https://r9y9.github.io/deepvoice3_pytorch/}}. 
 
-
-BAIDU \cite{Arik2017DeepVR}.
-We present Deep Voice, a production-quality text-to-speech system constructed entirely from deep neural networks. Deep Voice lays the groundwork for truly end-to-end neural speech synthesis. The system comprises five major building blocks: a segmentation model for locating phoneme boundaries, a grapheme-to-phoneme conversion model, a phoneme duration prediction model, a fundamental frequency prediction model, and an audio synthesis model. For the segmentation model, we propose a novel way of performing phoneme boundary detection with deep neural networks using connectionist temporal classification (CTC) loss. For the audio synthesis model, we implement a variant of WaveNet that requires fewer parameters and trains faster than the original. By using a neural network for each component, our system is simpler and more flexible than traditional text-to-speech systems, where each component requires laborious feature engineering and extensive domain expertise. Finally, we show that inference with our system can be performed faster than real time and describe optimized WaveNet inference kernels on both CPU and GPU that achieve up to 400x speedups over existing implementations. 
-
-\subsection{Mozilla Common Voice}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/deepvoice.png}
+    \caption{Deep Voice 3 gebruikt convolutie lagen om tekst naar een \textit{key-value pair} representatie om te zetten in de Encoder module. De decoder leert en gebruikt deze representatie om die om te zetten naar mel-scale spectogrammen dat corresponderen met de output audio waveform. De zogenaamde \textit{hidden states}, de latente lagen in het neurale netwerk, worden dan aan de converter module die voorspellingen maken over de vocoder parameters voor het synthetiseren van de audio waveform.}
+    \label{fig:deepvoice}
+\end{figure}
 
 \subsection{Char2Wav}
-\url{http://josesotelo.com/speechsynthesis/}
+Char2Wav is een end-to-end neural netwerk model voor spraak synthese\cite{sotelo2017char2wav}. Dit netwerk heeft twee componenten: een \textit{reader} en een neurale vocoder. De \textit{reader} is een encoder-decoder model met een attention module. De encoder is een bidirectioneel, recurrent neuraal netwerk dat tekst of foniemen als input neemt. De decoder is ook een neuraal netwerk met de attentie module dat akoestieke features maakt voor de vocoder. De neurale vocoder is een SampleRNN, waarmee audio waveforms worden gegenereerd gegeven de features van de decoder. Char2Wav leert audio waveforms te produceren door tekst, zonder dat daar een translatie tussen komt zoals spectogrammen. Een aantal voorbeelden zijn te vinden op de website van het onderzoek \footnote{\url{http://josesotelo.com/speechsynthesis/}}.
 
 \subsection{Parrotron}
-\cite{biadsy2019parrotron}
-We describe Parrotron, an end-to-end-trained speech-to-speech conversion model that maps an input spectrogram directly to another spectrogram, without utilizing any intermediate discrete representation. The network is composed of an encoder, spectrogram and phoneme decoders, followed by a vocoder to synthesize a time-domain waveform. We demonstrate that this model can be trained to normalize speech from any speaker regardless of accent, prosody, and background noise, into the voice of a single canonical target speaker with a fixed accent and consistent articulation and prosody. We further show that this normalization model can be adapted to normalize highly atypical speech from a deaf speaker, resulting in significant improvements in intelligibility and naturalness, measured via a speech recognizer and listening tests. Finally, demonstrating the utility of this model on other speech tasks, we show that the same model architecture can be trained to perform a speech separation task 
+Parrotron is een end-to-end speech-to-speech neuraal netwerk dat een input van een spectogram direct naar een ander spectogram kan converteren, zonder dat daar een intermediaire representatie tussen zit\cite{biadsy2019parrotron}. Het netwerk heeft een encoder module, een spectogram en foniemen decoder en een vocoder om de audio waveform the synthetiseren. Het netwerk demonstreert dat het, gegeven een stem met een accent, een bepaalde prosodie en achtergrond ruis, het om kan zetten naar een \textit{target} speaker met een specifiek accent, prosodie en consistente articulatie. In het onderzoek wordt het gebruikt om niet-verstaanbare spraak of spraak met een accent te normaliseren, maar er wordt gehypothetiseerd dat dit ook andersom werkt. Een aantal voorbeelden zijn te vinden op de website van het onderzoek \footnote{\url{https://google.github.io/tacotron/publications/parrotron/index.html}}.
+
+
+
 
 
 
 \subsection{Tacotron 2}
-\cite{Shen2018NaturalTS}
-Natural TTS Synthesis by Conditioning WaveNet on Mel Spectrogram Predictions
-This paper describes Tacotron 2, a neural network architecture for speech synthesis directly from text. The system is composed of a recurrent sequence-to-sequence feature prediction network that maps character embeddings to mel-scale spectrograms, followed by a modified WaveNet model acting as a vocoder to synthesize timedomain waveforms from those spectrograms. Our model achieves a mean opinion score (MOS) of 4.53 comparable to a MOS of 4.58 for professionally recorded speech. To validate our design choices, we present ablation studies of key components of our system and evaluate the impact of using mel spectrograms as the input to WaveNet instead of linguistic, duration, and F0 features. We further demonstrate that using a compact acoustic intermediate representation enables significant simplification of the WaveNet architecture. 
+Tacotron 2 is een verbeterde versie van Tacotron, waarbij onder andere een WaveNet vocoder wordt geïntroduceerd\cite{Shen2018NaturalTS}. In plaats van $F_0$ features, linguistieke en andere features worden mel-scale spectograms gebruikt als input naar de WaveNet vocoder. Een zeer goede, open-source, licentievrije implementatie is ontworpen door NVIDIA en kan worden gebruikt om nieuwe stemvarianten te ontwikkelen \footnote{\url{https://github.com/NVIDIA/tacotron2}}. Deze implementatie gebruikt WaveGlow als vocoder.
 
-\footnote{\url{https://rayhane-mamah.github.io/Tacotron-2_audio_samples/}}
 
-\subsubsection{Prosody embedding}
-\footnote{\url{https://syang1993.github.io/gst-tacotron/}}
- In this work, we propose "global style tokens" (GSTs), a bank of embeddings that are jointly trained within Tacotron, a state-of-the-art end-to-end speech synthesis system. The embeddings are trained with no explicit labels, yet learn to model a large range of acoustic expressiveness. GSTs lead to a rich set of significant results. The soft interpretable "labels" they generate can be used to control synthesis in novel ways, such as varying speed and speaking style - independently of the text content. They can also be used for style transfer, replicating the speaking style of a single audio clip across an entire long-form text corpus. When trained on noisy, unlabeled found data, GSTs learn to factorize noise and speaker identity, providing a path towards highly scalable but robust speech synthesis. 
 
-SAMPLES:
-\url{https://ai.googleblog.com/2018/03/expressive-speech-synthesis-with.html}
-\begin{figure}[]
+
+\subsubsection{Prosody Embedding}
+In een recent onderzoek wordt Prosody Embedding geïntroduceerd\cite{skerry2018towards}. Er wordt gebruik gemaakt van `global style tokens' (GSTs) die simultaan worden getraind binnen het netwerk van Tacotron. Deze embeddings worden getraind zonder expliciete labels, wat betekent dat er geen expliciete categorieën worden hoeven aangegeven per spraakfragment, maar modelleren desondanks veel expressie in spraak. Deze embeddings kunnen ook gestuurd worden, onafhankelijk van de tekstuele input. Er is een onofficiële open-source implementatie met een aantal voorbeelden \footnote{\url{https://syang1993.github.io/gst-tacotron/}}.
+
+Ook zijn op de website van het onderzoek een aantal voorbeelden te vinden \footnote{\url{https://ai.googleblog.com/2018/03/expressive-speech-synthesis-with.html}}.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{figures/tacotron_prosody.png}
-    \caption{Towards End-to-End Prosody Transfer for Expressive Speech Synthesis with Tacotron \cite{skerry2018towards}}
+    \caption{Model architectuur van `Towards End-to-End Prosody Transfer for Expressive Speech Synthesis with Tacotron' \cite{skerry2018towards}}
     \label{fig:tts}
 \end{figure}
 
 \subsection{WaveGlow}
-\footnote{\url{https://nv-adlr.github.io/WaveGlow}}
+WaveGlow is een op flow-gebaseerd netwerk dat spraak van hoge kwaliteit kan genereren van mel-spectogrammen. WaveGlow komt voort uit WaveNet en Glow (een generatief model) \footnote{\url{https://openai.com/blog/glow/}} en kan, zonder gebruik te maken van het sterke maar langzame, zelfvoorspellende vermogen van WaveNet, zeer realistische audio waveforms synthetiseren \footnote{\url{https://nv-adlr.github.io/WaveGlow}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Sample Efficient Adaptive Text-to-Speech}
+Sample Efficient Adaptive Text-to-Speech bouwt voort op een \textit{multi-speaker model}, gebruikmakend van WaveNet, en leert onafhankelijk de latente \textit{embedding} van elke spreker\cite{chen2018sample}. Latente embeddings zijn een set van vectoren of reële getallen die een netwerk leert om een set informatie om te zetten in een andere set informatie, bijvoorbeeld het vertalen van een tekst naar een mel-spectogram. Het doel van dit netwerk is niet het leren van de \textit{weights} dat een text-to-speech systeem goed maakt, maar het produceren van een netwerk dat weinig data nodig heeft en snel kan aanpassen aan nieuwe stemvarianten. Gegeven een al goed getraind text-to-speech netwerk, zoals een WaveNet of Tacotron (2) netwerk met veel spraakdata en de juiste hyperparameters, kan het met weinig data van een andere stem zeer effectief een andere stemvariant leren, gebaseerd op een combinatie van de originele stem en de \textit{input} stem. Met maar een aantal minuten aan spraakdata van een nieuwe spreker, kan het model met deze nieuwe \textit{speaker embedding} een zeer realistische en natuurlijke stem genereren.
 
-There is growing interest in developing neural TTS models that can be trained end-to-end withoutthe need for hand-crafted representations.  In this study we focus on extending the autoregressiveWaveNet model (van den Oord et al., 2016; 2017) to the few-shot learning setting to adapt to speakersthat were not presented at training time. Other recent neural TTS models include Tacotron 2 (Skerry-Ryan et al., 2018) (building on (Wang et al., 2017)) which uses WaveNet as a vocoder to invertmel-spectrograms generated by an attentive sequence-to-sequence model. DeepVoice 2 (Gibianskyet al., 2017) (building on (Arık et al., 2017)) introduced a multi-speaker variation of Tacotron thatlearns a low-dimensional embedding for each speaker, which was further extended in DeepVoice 3(Ping et al., 2018) to a 2,400 multi-speaker scenario. Unlike WaveNet and DeepVoice, the Char2Wav(Sotelo et al., 2017) and VoiceLoop (Taigman et al., 2018) models produce World Vocoder Features(Morise et al., 2016) instead of generating raw audio signals.Although many of these systems have produced high-quality samples for speakers present in thetraining set, generalizing to new speakers given only a few seconds of audio remains a challenge.There have been several concurrent works to address this few-shot learning problem. The VoiceLoopmodel introduced a novel memory-based architecture that was extended by Nachmani et al. (2018)to few-shot voice style adaptation,  by introducing an auxiliary fitting network that predicts theembedding of a new speaker.  Jia et al. (2018) extended the Tacotron model for one-shot speakeradaptation by conditioning on a speaker embedding vector extracted from a pretrained speaker identitymodel of Wan et al. (2018). The most similar approached to our work was proposed by Arik et al.(2018) for the DeepVoice 3 model. They considered both predicting the embedding with an encodingnetwork and fitting the embedding based on a small amount of adaptation data, but the adaptationwas applied to a prediction model for mel-spectrograms with a fixed vocoder.
+Dit onderzoek biedt dus de mogelijk om, gegeven een al goed getraind text-to-speech model, op een snelle, effectieve manier meerdere stemvarianten te genereren. Hiervoor is slechts een aantal minuten spraakdata nodig van de te emuleren spreker, zoals een met een accent. Dit is voordeliger dan het volledig opnieuw trainen van een netwerk op een nieuwe stem, gezien het volledig nieuw trainen van een stem veel spraakdata en tijd vergt, en de juiste parameters voor het netwerk moeten zijn gekozen.
 
-\cite{chen2018sample}
-\footnote{\url{https://sample-efficient-adaptive-tts.github.io/demo/}}
+Een aantal audio fragmenten zijn beschikbaar gesteld op de website van het onderzoek 
+\footnote{\url{https://sample-efficient-adaptive-tts.github.io/demo/}}.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Afweging en advies}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Het aanpakken van een aantal facetten van Prosody.
-\url{7700-transfer-learning-from-speaker-verification-to-multispeaker-text-to-speech-synthesis (1).pdf}
+Gegeven de recente publicatiedatum, de in productieomgevingen geteste architectuur en vooral adequate, open-source en licentievrije implementatie wordt aangeraden Tacotron 2 met WaveGlow te gebruiken als neuraal netwerk model om een Nederlands gesynthetiseerde stem te creëren (de \textit{baseline}). Het geeft tevens veel controle over de te genereren stem, omdat het goed werkt als \textit{single-speaker} model, in contrast met Deep Voice 3 dat een \textit{multi-speaker} model gebruikt. Nadat het netwerk is getraind, kan worden gekeken naar het trainen van `global style tokens' voor het genereren van meer expressieve spraak, hoewel een officiële implementatie nog ontbreekt. Ook kunnen meerdere stemvarianten op een relatief eenvoudige wijze ontwikkeld met SEATS, nadat de `weights' van het netwerk van de \textit{baseline} stem zijn getraind.

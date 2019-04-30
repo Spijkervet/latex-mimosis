@@ -83,20 +83,27 @@
 
 
 \newacronym[description={Text-to-speech}]{TTS}{TTS}{text-to-speech}
-   
+
+\newacronym[description={Part-of-Speechh tagging}]{POS-tagging}{POS-tagging}{pos}
+
+\newacronym[description={Pitch Synchronous Overlap and Add}]{PSOLA}{PSOLA}{psola}
+
+\newacronym[description={Recurrent Neural Network}]{RNN}{RNN}{RNN}
+
+\newacronym[description={Global Style Tokens}]{GST}{GST}{GST}
+
+\newacronym[description={Corpus Gesproken Nederlands}]{CGN}{CGN}{CGN}
+
+\newacronym[description={Pulse-code modulation}]{PCM}{PCM}{PCM}
+
+\newacronym[description={Sample Efficient Adaptive Text-to-Speech}]{SEATS}{SEATS}{SEATS}
+
+\newacronym[description={Word Error Rate}]{WER}{WER}{WER}
+
+\newacronym[description={Graphics processing unit}]{GPU}{GPU}{GPU}
 
 
-\newglossaryentry{LaTeX}{%
-  name        = {\LaTeX},
-  description = {A document preparation system},
-  sort        = {LaTeX},
-}
-
-\newglossaryentry{Real numbers}{%
-  name        = {$\real$},
-  description = {The set of real numbers},
-  sort        = {Real numbers},
-}
+\newacronym[description={Amazon Web Services}]{AWS}{AWS}{AWS}
 
 \makeindex
 \makeglossaries
@@ -135,15 +142,15 @@
 \bookmarksetup{startatroot}
 \backmatter
 
-  \begingroup
-    \let\clearpage\relax
-    \glsaddall
-    \printglossary[type=\acronymtype]
-    \newpage
-    \printglossary
-  \endgroup
+\begingroup
+\let\clearpage\relax
+\glsaddall
+\printglossary[type=\acronymtype]
+% \newpage
+% \printglossary
+\endgroup
 
-\printindex
-\printbibliography
+% \printindex
 \label{section:bibliography}
+\printbibliography
 \end{document}
